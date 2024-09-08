@@ -199,6 +199,7 @@ function App() {
                     <input
                       type="text"
                       value={`${proceso.proceso}`}
+                      onChange={(e) => handleProcesoChange(index, 'proceso', e.target.value)}
                       style={{ width: '100%', height: '4ch', border: '.1vh solid black', display: 'flex', justifyContent: 'center', alignItems: 'center', textAlign: 'center', background: '#f2f2f2', outline: 'none', boxShadow: 'none' }}
                     />
                   </td>
@@ -210,9 +211,9 @@ function App() {
                       onChange={(e) => handleProcesoChange(index, 'tiempoInicio', e.target.value)}
                       style={{ width: '100%', height: '4ch', border: '.1vh solid black', display: 'flex', justifyContent: 'center', alignItems: 'center', textAlign: 'center', background: 'white', outline: 'none', boxShadow: 'none' }}
                     />
-                    <style jsx>{`
+                    <style jsx ="true">{`
                       input::placeholder {
-                        font-size: 1.2ch; /* Cambia el tamaño de la fuente del placeholder */
+                        font-size: 1.2ch;
                       }
                     `}</style>
                   </td>
