@@ -264,7 +264,7 @@ function App() {
   //--------------------------------------------------------------------------------
   
   return (
-    <div className="App" style={{ width: '100vw', display: 'flex', flexDirection: 'column', alignItems: 'center', background: '#d8d2c6', minHeight: '100vh' }}>
+    <div className="App" style={{ width: '100vw', display: 'flex', flexDirection: 'column', alignItems: 'center', background: '#bfbfbf70', minHeight: '100vh' }}>
       
       <div className='Titulo' style={{ width: '90%', height: '6ch', background: '#375d72', borderRadius: '3ch', marginTop: '1ch', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white' }}>
         <h1 style={{ fontSize: '2.5ch' ,letterSpacing:'.1vw'}}>Algoritmos de Despacho</h1>
@@ -320,7 +320,7 @@ function App() {
               <th style={{fontWeight:'400'}}>Tiempo de sistema</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody >
             {procesos.map((proceso, index) => (
               <tr key={index}>
                 <td>
@@ -328,7 +328,7 @@ function App() {
                     type="text"
                     value={`${proceso.proceso}`}
                     onChange={(e) => handleProcesoChange(index, 'proceso', e.target.value)}
-                    style={{ width: '100%', height: '4ch', border: '.1vh solid black', display: 'flex', justifyContent: 'center', alignItems: 'center', textAlign: 'center', background: '#523772', outline: 'none', boxShadow: 'none',color:'white',fontWeight:'600' }}
+                    style={{ width: '100%', height: '4ch', border: 'none', display: 'flex', justifyContent: 'center', alignItems: 'center', textAlign: 'center', background: '#523772', outline: 'none', boxShadow: 'none',color:'white',fontWeight:'600' }}
                   />
                 </td>
                 <td>
@@ -337,7 +337,7 @@ function App() {
                     value={proceso.tiempoInicio}
                     placeholder="entre un numero en segundos"
                     onChange={(e) => handleProcesoChange(index, 'tiempoInicio', e.target.value)}
-                    style={{ width: '100%', height: '4ch', border: '.1vh solid black', display: 'flex', justifyContent: 'center', alignItems: 'center', textAlign: 'center', background: 'white', outline: 'none', boxShadow: 'none' }}
+                    style={{ width: '100%', height: '4ch', border: 'none', display: 'flex', justifyContent: 'center', alignItems: 'center', textAlign: 'center', background: '#fff9da', outline: 'none', boxShadow: 'none' }}
                   />
                   <style jsx ="true">{`
                     input::placeholder {
@@ -351,7 +351,7 @@ function App() {
                     value={proceso.tiempoEjecucion}
                     placeholder="entre un numero en segundos"
                     onChange={(e) => handleProcesoChange(index, 'tiempoEjecucion', e.target.value)}
-                    style={{ width: '100%', height: '4ch', border: '.1vh solid black', display: 'flex', justifyContent: 'center', alignItems: 'center', textAlign: 'center', outline: 'none', boxShadow: 'none' }}
+                    style={{ width: '100%', height: '4ch', border: 'none', display: 'flex', justifyContent: 'center', alignItems: 'center', textAlign: 'center', outline: 'none', boxShadow: 'none', background: '#fff9da' }}
                   />
                 </td>
                 {
@@ -362,7 +362,7 @@ function App() {
                         value={proceso.prioridad}
                         placeholder="entre un numero"
                         onChange={(e) => handleProcesoChange(index, 'prioridad', e.target.value)}
-                        style={{ width: '100%', height: '4ch', border: '.1vh solid black', display: 'flex', justifyContent: 'center', alignItems: 'center', textAlign: 'center', outline: 'none', boxShadow: 'none' }}
+                        style={{ width: '100%', height: '4ch', border: 'none', display: 'flex', justifyContent: 'center', alignItems: 'center', textAlign: 'center', outline: 'none', boxShadow: 'none', background: '#fff9da' }}
                       />
                     </td>
                   )
@@ -372,7 +372,7 @@ function App() {
                     type="number"
                     placeholder="click en calcular"
                     value={proceso.tiempoEspera}
-                    style={{ width: '100%', height: '4ch', border: '.1vh solid black', display: 'flex', justifyContent: 'center', alignItems: 'center', textAlign: 'center', outline: 'none', boxShadow: 'none' }}
+                    style={{ width: '100%', height: '4ch', border: 'none', display: 'flex', justifyContent: 'center', alignItems: 'center', textAlign: 'center', outline: 'none', boxShadow: 'none' , background: '#fff9da'}}
                     readOnly
                   />
                 </td>
@@ -381,7 +381,7 @@ function App() {
                     type="number"
                     value={proceso.tiempoSistema}
                     placeholder="click en calcular"
-                    style={{ width: '100%', height: '4ch', border: '.1vh solid black', display: 'flex', justifyContent: 'center', alignItems: 'center', textAlign: 'center', outline: 'none', boxShadow: 'none' }}
+                    style={{ width: '100%', height: '4ch', border: 'none', display: 'flex', justifyContent: 'center', alignItems: 'center', textAlign: 'center', outline: 'none', boxShadow: 'none', background: '#fff9da' }}
                     readOnly
                   />
                 </td>
