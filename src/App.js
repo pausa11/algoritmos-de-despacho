@@ -266,14 +266,14 @@ function App() {
   return (
     <div className="App" style={{ width: '100vw', display: 'flex', flexDirection: 'column', alignItems: 'center', background: '#d8d2c6', minHeight: '100vh' }}>
       
-      <div className='Titulo' style={{ width: '90%', height: '6ch', background: '#377263', borderRadius: '3ch', marginTop: '1ch', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white' }}>
-        <h1 style={{ fontSize: '2.5ch' }}>Algoritmos de Despacho</h1>
+      <div className='Titulo' style={{ width: '90%', height: '6ch', background: '#375d72', borderRadius: '3ch', marginTop: '1ch', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white' }}>
+        <h1 style={{ fontSize: '2.5ch' ,letterSpacing:'.1vw'}}>Algoritmos de Despacho</h1>
       </div>
 
       <div className='seleccionDeOPciones' style={{ display: 'flex', alignItems: 'left', flexDirection: 'column', justifyContent: 'left' }}>
         
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '6ch', width: '100%' }}>
-          <h5>Seleccione el tipo de Despacho</h5>
+          <h5 style={{fontWeight:'400'}}>Seleccione el tipo de Despacho</h5>
           <select
             value={tipoDespacho}
             onChange={(e) => setTipoDespacho(e.target.value)}
@@ -286,7 +286,7 @@ function App() {
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', height: '6ch', width: '100%' }}>
-          <h5>Seleccione el número de procesos</h5>
+          <h5 style={{fontWeight:'400'}}>Seleccione el número de procesos</h5>
           <select
             value={procesos.length}
             onChange={handleSelectChange}
@@ -307,17 +307,17 @@ function App() {
         <h2>Tabla de Procesos</h2>
         <table style={{ width: '90%', marginTop: '1ch', borderCollapse: 'collapse', marginBottom: '2ch' }}>
           <thead>
-            <tr style={{ fontSize: '1.2ch' }}>
-              <th>Proceso</th>
-              <th>Tiempo de Inicio</th>
-              <th>Tiempo de Ejecución</th>
+            <tr style={{ fontSize: '1.2ch'}}>
+              <th style={{fontWeight:'400'}}>Proceso</th>
+              <th style={{fontWeight:'400'}}>Tiempo de Inicio</th>
+              <th style={{fontWeight:'400'}}>Tiempo de Ejecución</th>
               {
                 tipoDespacho === 'Prioridad' && (
-                  <th>Prioridad</th>
+                  <th style={{fontWeight:'400'}}>Prioridad</th>
                 )
               }
-              <th>Tiempo de espera</th>
-              <th>Tiempo de sistema</th>
+              <th style={{fontWeight:'400'}}>Tiempo de espera</th>
+              <th style={{fontWeight:'400'}}>Tiempo de sistema</th>
             </tr>
           </thead>
           <tbody>
@@ -328,7 +328,7 @@ function App() {
                     type="text"
                     value={`${proceso.proceso}`}
                     onChange={(e) => handleProcesoChange(index, 'proceso', e.target.value)}
-                    style={{ width: '100%', height: '4ch', border: '.1vh solid black', display: 'flex', justifyContent: 'center', alignItems: 'center', textAlign: 'center', background: '#f2f2f2', outline: 'none', boxShadow: 'none' }}
+                    style={{ width: '100%', height: '4ch', border: '.1vh solid black', display: 'flex', justifyContent: 'center', alignItems: 'center', textAlign: 'center', background: '#523772', outline: 'none', boxShadow: 'none',color:'white',fontWeight:'600' }}
                   />
                 </td>
                 <td>
@@ -394,7 +394,7 @@ function App() {
       <div className='calcular' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '1ch' }}>
         <button
           onClick={calcularTiempos}
-          style={{ width: '10ch', borderRadius: '1ch', background: 'white', color: '#377263', display: 'flex', justifyContent: 'center', alignItems: 'center', border: 'none', fontWeight: '600', fontSize: '3ch', padding: '.5ch', cursor: 'pointer' }}
+          style={{ width: '10ch', borderRadius: '1ch', background: 'white', color: '#375d72', display: 'flex', justifyContent: 'center', alignItems: 'center', border: 'none', fontWeight: '600', fontSize: '3ch', padding: '.5ch', cursor: 'pointer' }}
         >
           Calcular
         </button>
@@ -403,7 +403,7 @@ function App() {
       <div className='diagramaDegantt' style={{width:'90%',marginBottom:'5ch',borderRadius:'2ch',background:'white',height:'30ch',padding:'1ch'}}>               
         <Chart
           width={'100%'}
-          height={'20ch'}
+          height={'25ch'}
           chartType="Gantt"
           loader={<div>Loading Chart</div>}
           data={[
@@ -423,7 +423,7 @@ function App() {
                 `${proceso.proceso}`,
                 `${proceso.proceso}`, 
                 '',
-                new Date(2021, 1, 1, 0, 0, proceso.tiempoInicio ),
+                new Date(2021, 1, 1, 0, 0, proceso.tiempoEspera ),
                 new Date(2021, 1, 1, 0, 0, proceso.tiempoSistema),
                 proceso.tiempoEjecucion,
                 100,
@@ -432,12 +432,40 @@ function App() {
             }),
           ]}
           options={{
-            height: '20ch',
             gantt: {
               trackHeight: 30,
+              palette: [
+                {
+                  color: '#377263', // Color de la tarea
+                  dark: '#377263', // Color de la sombra de la tarea
+                  light: '#377263', // Color del área libre
+                },
+              ],
+              criticalPathEnabled: false, // Desactiva la ruta crítica si no la necesitas
+              arrow: {
+                angle: 45, // Ángulo de las flechas entre tareas
+                width: 2, // Ancho de las flechas
+                color: 'red' // Color de las flechas
+              },
+            },
+            backgroundColor: 'red', // Color de fondo del gráfico
+            fontName: 'Arial', // Tipo de fuente
+            fontSize: 12, // Tamaño de la fuente
+            hAxis: {
+              textStyle: {
+                color: 'red', // Color de los textos en el eje horizontal
+                fontName: 'Arial',
+                fontSize: 12,
+              },
+            },
+            vAxis: {
+              textStyle: {
+                color: 'red', // Color de los textos en el eje vertical
+                fontName: 'Arial',
+                fontSize: 12,
+              },
             },
           }}
-          rootProps={{ 'data-testid': '1' }}
         />
       </div>
 
