@@ -328,13 +328,18 @@ function App() {
                     type="text"
                     value={`${proceso.proceso}`}
                     onChange={(e) => handleProcesoChange(index, 'proceso', e.target.value)}
-                    style={{ width: '100%', height: '4ch', border: 'none', display: 'flex', justifyContent: 'center', alignItems: 'center', textAlign: 'center', background: '#523772', outline: 'none', boxShadow: 'none',color:'white',fontWeight:'600' }}
+                    style={{ width: '95%', height: '4ch', border: 'none', display: 'flex', justifyContent: 'center', alignItems: 'center', textAlign: 'center', background: '#523772', outline: 'none', boxShadow: 'none',color:'white',fontWeight:'600' }}
                   />
                 </td>
                 <td>
                   <input
                     type="number"
                     value={proceso.tiempoInicio}
+                    onInput={(e) => {
+                      // Elimina cualquier carácter que no sea un número o un punto decimal
+                      e.target.value = e.target.value.replace(/[^0-9]/g, '');
+                    }}
+                    min={0}
                     placeholder="entre un numero en segundos"
                     onChange={(e) => handleProcesoChange(index, 'tiempoInicio', e.target.value)}
                     style={{ width: '100%', height: '4ch', border: 'none', display: 'flex', justifyContent: 'center', alignItems: 'center', textAlign: 'center', background: '#fff9da', outline: 'none', boxShadow: 'none' }}
@@ -349,6 +354,11 @@ function App() {
                   <input
                     type="number"
                     value={proceso.tiempoEjecucion}
+                    onInput={(e) => {
+                      // Elimina cualquier carácter que no sea un número o un punto decimal
+                      e.target.value = e.target.value.replace(/[^0-9]/g, '');
+                    }}
+                    min={0}
                     placeholder="entre un numero en segundos"
                     onChange={(e) => handleProcesoChange(index, 'tiempoEjecucion', e.target.value)}
                     style={{ width: '100%', height: '4ch', border: 'none', display: 'flex', justifyContent: 'center', alignItems: 'center', textAlign: 'center', outline: 'none', boxShadow: 'none', background: '#fff9da' }}
@@ -360,6 +370,11 @@ function App() {
                       <input
                         type="number"
                         value={proceso.prioridad}
+                        min={0}
+                        onInput={(e) => {
+                          // Elimina cualquier carácter que no sea un número o un punto decimal
+                          e.target.value = e.target.value.replace(/[^0-9]/g, '');
+                        }}
                         placeholder="entre un numero"
                         onChange={(e) => handleProcesoChange(index, 'prioridad', e.target.value)}
                         style={{ width: '100%', height: '4ch', border: 'none', display: 'flex', justifyContent: 'center', alignItems: 'center', textAlign: 'center', outline: 'none', boxShadow: 'none', background: '#fff9da' }}
