@@ -1,6 +1,8 @@
-# Getting Started with Create React App
+# algoritmos de despacho con react
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+puedes ver la pagina en [Algortimos Despacho]( https://pausa11.github.io/algoritmos-de-despacho/)
+
+This project was bootstrapped with [Create React PPp](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 
