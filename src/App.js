@@ -1,11 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Chart} from 'react-google-charts';
 
 function App() {
   const [tipoDespacho, setTipoDespacho] = useState('FiFo');
   const [procesos, setProcesos] = useState([
-    { proceso: 'p1', tiempoInicio: 0, tiempoEjecucion: 0, tiempoEspera: 0, tiempoSistema: 0,prioridad: 0 }
+    { proceso: 'p1', tiempoInicio: 0, tiempoEjecucion: 1, tiempoEspera: 1, tiempoSistema: 1,prioridad: 0 }
   ]);
+
+
+  //--------------------------------------------------------------------------------
+
+  useEffect(() => {
+    calcularTiempos();
+    //eslint-disable-next-line
+  }, [tipoDespacho]);
 
   //--------------------------------------------------------------------------------
 
@@ -264,16 +272,18 @@ function App() {
   //--------------------------------------------------------------------------------
   
   return (
-    <div className="App" style={{ width: '100vw', display: 'flex', flexDirection: 'column', alignItems: 'center', background: '#bfbfbf70', minHeight: '100vh' }}>
+    <div className="App" style={{ width: '100vw', display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: '100vh' }}>
       
-      <div className='Titulo' style={{ width: '90%', height: '6ch', background: '#375d72', borderRadius: '3ch', marginTop: '1ch', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white' }}>
+      <div className='Titulo' style={{ width: '90%', height: '6ch', borderRadius: '3ch', marginTop: '1ch', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <h1 style={{ fontSize: '2.5ch' ,letterSpacing:'.1vw'}}>Algoritmos de Despacho</h1>
       </div>
 
-      <div className='seleccionDeOPciones' style={{ display: 'flex', alignItems: 'left', flexDirection: 'column', justifyContent: 'left' }}>
+      <div className='seleccionDeOPciones' style={{ display: 'flex', alignItems: 'left', flexDirection: 'column', justifyContent: 'left',width:'80%' }}>
         
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '6ch', width: '100%' }}>
-          <h5 style={{fontWeight:'400'}}>Seleccione el tipo de Despacho</h5>
+        <div style={{ display: 'flex', alignItems: 'center', height: '6ch', width: '100%' }}>
+          <div style={{width:'20ch'}}>
+            <h5 style={{fontWeight:'400'}}>Algoritmos de Despacho</h5>
+          </div>
           <select
             value={tipoDespacho}
             onChange={(e) => setTipoDespacho(e.target.value)}
@@ -286,7 +296,9 @@ function App() {
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', height: '6ch', width: '100%' }}>
-          <h5 style={{fontWeight:'400'}}>Seleccione el número de procesos</h5>
+          <div style={{width:'20ch'}}>
+            <h5 style={{fontWeight:'400'}}>Número de Procesos</h5>
+          </div>
           <select
             value={procesos.length}
             onChange={handleSelectChange}
@@ -303,9 +315,9 @@ function App() {
 
       </div>
 
-      <div className="tabla" style={{ width: '90%', background: 'white', borderRadius: '1ch', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '1ch' }}>
+      <div className="tabla" style={{ width: '80%', background: 'white', borderRadius: '1ch', display: 'flex', flexDirection: 'column', padding: '3ch' ,boxShadow: '0 0 1ch rgba(0, 0, 0, 0.2)'}}>
         <h2>Tabla de Procesos</h2>
-        <table style={{ width: '90%', marginTop: '1ch', borderCollapse: 'collapse', marginBottom: '2ch' }}>
+        <table style={{ width: '100%', marginTop: '1ch', borderCollapse: 'collapse', marginBottom: '2ch' }}>
           <thead>
             <tr style={{ fontSize: '1.2ch'}}>
               <th style={{fontWeight:'400'}}>Proceso</th>
@@ -406,16 +418,17 @@ function App() {
         </table>
       </div>
       
-      <div className='calcular' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '1ch' }}>
+      <div className='calcular' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '1ch', margin:'2ch'}}>
         <button
           onClick={calcularTiempos}
-          style={{ width: '10ch', borderRadius: '1ch', background: 'white', color: '#375d72', display: 'flex', justifyContent: 'center', alignItems: 'center', border: 'none', fontWeight: '600', fontSize: '3ch', padding: '.5ch', cursor: 'pointer' }}
+          style={{ width: '10ch', borderRadius: '.5ch', background: '#2684ff',color:'white', display: 'flex', justifyContent: 'center', alignItems: 'center', border: 'none', fontWeight: '100', fontSize: '2ch', padding: '.5ch', cursor: 'pointer' ,boxShadow: '0 0 1ch rgba(0, 0, 0, 0.2)'}}
         >
           Calcular
         </button>
       </div>
                       
-      <div className='diagramaDegantt' style={{width:'90%',marginBottom:'5ch',borderRadius:'2ch',background:'white',height:'30ch',padding:'1ch'}}>               
+      <div className='diagramaDegantt' style={{width:'80%',marginBottom:'5ch',borderRadius:'2ch',background:'white',height:'35ch',padding:'3ch',boxShadow: '0 0 1ch rgba(0, 0, 0, 0.2)'}}>
+        <h2>Diagrama de Gantt</h2>               
         <Chart
           width={'100%'}
           height={'25ch'}
@@ -433,7 +446,6 @@ function App() {
               { type: 'string', label: 'Dependencies' },
             ],
             ...procesos.map((proceso) => {
-              // console.log(proceso);
               return [
                 `${proceso.proceso}`,
                 `${proceso.proceso}`, 
@@ -456,29 +468,6 @@ function App() {
                   light: '#377263', // Color del área libre
                 },
               ],
-              criticalPathEnabled: false, // Desactiva la ruta crítica si no la necesitas
-              arrow: {
-                angle: 45, // Ángulo de las flechas entre tareas
-                width: 2, // Ancho de las flechas
-                color: 'red' // Color de las flechas
-              },
-            },
-            backgroundColor: 'red', // Color de fondo del gráfico
-            fontName: 'Arial', // Tipo de fuente
-            fontSize: 12, // Tamaño de la fuente
-            hAxis: {
-              textStyle: {
-                color: 'red', // Color de los textos en el eje horizontal
-                fontName: 'Arial',
-                fontSize: 12,
-              },
-            },
-            vAxis: {
-              textStyle: {
-                color: 'red', // Color de los textos en el eje vertical
-                fontName: 'Arial',
-                fontSize: 12,
-              },
             },
           }}
         />
