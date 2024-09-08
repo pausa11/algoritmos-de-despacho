@@ -335,7 +335,7 @@ function App() {
           <tbody >
             {procesos.map((proceso, index) => (
               <tr key={index}>
-                <td>
+                <td style={{background:'white'}}>
                   <input
                     type="text"
                     value={`${proceso.proceso}`}
