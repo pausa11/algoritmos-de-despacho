@@ -259,17 +259,32 @@ function App() {
 
   const handleSelectChange = (e) => {
     const newLength = parseInt(e.target.value);
-    const newProcesos = Array.from({ length: newLength }, (_, index) => ({
+  
+    let newProcesos = Array.from({ length: newLength }, (_, index) => ({
       proceso: `p${index + 1}`,
-      tiempoInicio: 0,
-      tiempoEjecucion: 0,
-      tiempoEspera: 0,
-      tiempoSistema: 0,
+      tiempoInicio: '',
+      tiempoEjecucion: '',
+      tiempoEspera: '',
+      tiempoSistema: '',
     }));
+  
     setProcesos(newProcesos);
   };
+  
 
   //--------------------------------------------------------------------------------
+
+  const validarCampos = () => {
+    let valid = true;
+    procesos.forEach((proceso) => {
+      if (proceso.tiempoInicio === null || proceso.tiempoInicio === '' || proceso.tiempoEjecucion === null || proceso.tiempoEjecucion === '') {
+        valid = false;
+      }
+    });
+    if (!valid) {
+      alert('Por favor, llene todos los campos');
+    }
+  }
   
   return (
     <div className="App" style={{ width: '100vw', display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: '100vh' }}>
@@ -420,7 +435,7 @@ function App() {
       
       <div className='calcular' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '1ch', margin:'2ch'}}>
         <button
-          onClick={calcularTiempos}
+          onClick={()=> {calcularTiempos();validarCampos()}}
           style={{ width: '10ch', borderRadius: '.5ch', background: '#2684ff',color:'white', display: 'flex', justifyContent: 'center', alignItems: 'center', border: 'none', fontWeight: '100', fontSize: '2ch', padding: '.5ch', cursor: 'pointer' ,boxShadow: '0 0 1ch rgba(0, 0, 0, 0.2)'}}
         >
           Calcular
