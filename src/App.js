@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Chart} from 'react-google-charts';
 
 function App() {
+
   const [tipoDespacho, setTipoDespacho] = useState('FiFo');
   const [procesos, setProcesos] = useState([
     { proceso: 'p1', tiempoInicio: 0, tiempoEjecucion: 1, tiempoEspera: 1, tiempoSistema: 1,prioridad: 0 }
   ]);
-
 
   //--------------------------------------------------------------------------------
 
@@ -122,40 +122,33 @@ function App() {
     if (tipoDespacho === 'FiFo' && procesos.length > 0) {
       const updatedProcesos = [...procesos];
       
-      // Asegúrate de que todos los valores sean números
       const parseNumber = (value) => parseInt(value, 10) || 0;
       
-      // Inicializar el primer proceso
       updatedProcesos[0] = {
         ...updatedProcesos[0],
         tiempoEspera: 0,
         tiempoSistema: parseNumber(updatedProcesos[0].tiempoEjecucion),
       };
       
-      // Variable para llevar el tiempo de finalización del proceso anterior
       let tiempoFinAnterior = parseNumber(updatedProcesos[0].tiempoEjecucion);
       
       for (let i = 1; i < updatedProcesos.length; i++) {
-        const tiempoEjecucionAnterior = parseNumber(updatedProcesos[i-1 >= 0 ? i-1 : 0].tiempoEjecucion);
-        const tiempoEsperaAnterior = parseNumber(updatedProcesos[i-1 >= 0 ? i-1 : 0].tiempoEspera);
+        // const tiempoEjecucionAnterior = parseNumber(updatedProcesos[i-1 >= 0 ? i-1 : 0].tiempoEjecucion);
+        // const tiempoEsperaAnterior = parseNumber(updatedProcesos[i-1 >= 0 ? i-1 : 0].tiempoEspera);
 
         const tiempoInicioActual = parseNumber(updatedProcesos[i].tiempoInicio);
         const tiempoEjecucionActual = parseNumber(updatedProcesos[i].tiempoEjecucion);
         
-        // Calcular tiempo de espera para el proceso actual
-        const tiempoEspera = i === 1 ? Math.max(0, tiempoFinAnterior) : Math.max(0, tiempoEjecucionAnterior + tiempoEsperaAnterior );
+        const tiempoEspera = tiempoInicioActual >= tiempoFinAnterior ? 0 : tiempoFinAnterior - tiempoInicioActual;
         
-        // Calcular tiempo de sistema para el proceso actual
         const tiempoSistema = tiempoEspera + tiempoEjecucionActual ;
         
-        // Actualizar el proceso actual
         updatedProcesos[i] = {
           ...updatedProcesos[i],
           tiempoEspera: tiempoEspera,
           tiempoSistema: tiempoSistema,
         };
         
-        // Actualizar el tiempo de fin para el siguiente proceso
         tiempoFinAnterior = tiempoInicioActual + tiempoSistema;
       }
       
@@ -167,7 +160,6 @@ function App() {
       const updatedProcesos = [...procesos];
 
       const SJFprocesos = ordenarProcesosSFJ(updatedProcesos);
-      console.log(SJFprocesos);
       
       // Asegúrate de que todos los valores sean números
       const parseNumber = (value) => parseInt(value, 10) || 0;
@@ -183,16 +175,12 @@ function App() {
       let tiempoFinAnterior = parseNumber(SJFprocesos[0].tiempoEjecucion);
 
       for (let i = 1; i < SJFprocesos.length; i++) {
-        const tiempoEjecucionAnterior = parseNumber(SJFprocesos[i-1 >= 0 ? i-1 : 0].tiempoEjecucion);
-        const tiempoEsperaAnterior = parseNumber(SJFprocesos[i-1 >= 0 ? i-1 : 0].tiempoEspera);
 
         const tiempoInicioActual = parseNumber(SJFprocesos[i].tiempoInicio);
         const tiempoEjecucionActual = parseNumber(SJFprocesos[i].tiempoEjecucion);
 
-        // Calcular tiempo de espera para el proceso actual
-        const tiempoEspera = i === 1 ? Math.max(0, tiempoFinAnterior) : Math.max(0, tiempoEjecucionAnterior + tiempoEsperaAnterior );
-
-        // Calcular tiempo de sistema para el proceso actual
+        const tiempoEspera = tiempoInicioActual >= tiempoFinAnterior ? 0 : tiempoFinAnterior - tiempoInicioActual;
+        
         const tiempoSistema = tiempoEspera + tiempoEjecucionActual ;
 
         // Actualizar el proceso actual
@@ -229,16 +217,12 @@ function App() {
       let tiempoFinAnterior = parseNumber(prioridadProcesos[0].tiempoEjecucion);
 
       for (let i = 1; i < prioridadProcesos.length; i++) {
-        const tiempoEjecucionAnterior = parseNumber(prioridadProcesos[i-1 >= 0 ? i-1 : 0].tiempoEjecucion);
-        const tiempoEsperaAnterior = parseNumber(prioridadProcesos[i-1 >= 0 ? i-1 : 0].tiempoEspera);
 
         const tiempoInicioActual = parseNumber(prioridadProcesos[i].tiempoInicio);
         const tiempoEjecucionActual = parseNumber(prioridadProcesos[i].tiempoEjecucion);
 
-        // Calcular tiempo de espera para el proceso actual
-        const tiempoEspera = i === 1 ? Math.max(0, tiempoFinAnterior) : Math.max(0, tiempoEjecucionAnterior + tiempoEsperaAnterior );
-
-        // Calcular tiempo de sistema para el proceso actual
+        const tiempoEspera = tiempoInicioActual >= tiempoFinAnterior ? 0 : tiempoFinAnterior - tiempoInicioActual;
+        
         const tiempoSistema = tiempoEspera + tiempoEjecucionActual ;
 
         // Actualizar el proceso actual
@@ -285,6 +269,8 @@ function App() {
       alert('Por favor, llene todos los campos');
     }
   }
+
+  //--------------------------------------------------------------------------------
   
   return (
     <div className="App" style={{ width: '100vw', display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: '100vh' }}>
@@ -301,7 +287,7 @@ function App() {
           </div>
           <select
             value={tipoDespacho}
-            onChange={(e) => setTipoDespacho(e.target.value)}
+            onChange={(e) => {setTipoDespacho(e.target.value);setProcesos([{ proceso: 'p1', tiempoInicio: 0, tiempoEjecucion: 1, tiempoEspera: 1, tiempoSistema: 1,prioridad: 0 }]);}}
             style={{ marginTop: '.8ch', marginLeft: '1ch', borderRadius: '1ch', width: '12ch', display: 'flex', textAlign: 'center' }}
           >
             <option value="FiFo">FiFo</option>
@@ -461,12 +447,13 @@ function App() {
               { type: 'string', label: 'Dependencies' },
             ],
             ...procesos.map((proceso) => {
+              console.log(proceso);
               return [
                 `${proceso.proceso}`,
                 `${proceso.proceso}`, 
                 '',
-                new Date(2021, 1, 1, 0, 0, proceso.tiempoEspera ),
-                new Date(2021, 1, 1, 0, 0, proceso.tiempoSistema),
+                new Date(2021, 1, 1, 0, 0, parseInt(proceso.tiempoInicio) + parseInt(proceso.tiempoEspera)),
+                new Date(2021, 1, 1, 0, 0, parseInt(proceso.tiempoInicio) + parseInt(proceso.tiempoEspera) + parseInt(proceso.tiempoEjecucion)),
                 proceso.tiempoEjecucion,
                 100,
                 null,
